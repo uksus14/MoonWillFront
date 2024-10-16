@@ -31,8 +31,7 @@
                     title.innerText = section.title
                     const button = document.createElement("button")
                     button.innerText = "Delete"
-                    const id = section.pk;
-                    button.addEventListener("click", () => {console.log(id);deleteSection(id)})
+                    button.addEventListener("click", () => deleteSection(section.pk))
                     const div = document.createElement("div")
                     div.classList.add("section")
                     div.style = `background-color: hsl(${section.color}, 100%, 50%)`;
@@ -42,8 +41,7 @@
                 }
             })
         }
-        async function deleteSection() {
-            console.log("woooooow");
+        async function deleteSection(id) {
             await fetch(base+`section/${id}/`, {method: "DELETE"})
             updateSections()
         }
