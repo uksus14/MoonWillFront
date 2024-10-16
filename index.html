@@ -30,9 +30,8 @@
                     title.innerText = section.title
                     const button = document.createElement("button")
                     button.innerText = "Delete"
-                    button.onclick = () => deleteSection(section.id)
+                    button.addEventListener("click", ev => deleteSection(section.id))
                     const div = document.createElement("div")
-                    div.id = `section-${section.id}`
                     div.classList.add("section")
                     div.style = `background-color: hsl(${section.color}, 100%, 50%)`;
                     div.appendChild(title);
@@ -41,10 +40,9 @@
                 }
             })
         }
-        function deleteSection(id){
-            fetch(`https://moonwillsing.pythonanywhere.com/section/${id}`, {method: "DELETE"}).then(res => {
-                if(res.status == 200)document.getElementById(`section-${id}`).remove()
-            })
+        async function deleteSection(id){
+            await fetch(base+`section/${id}`, {method: "DELETE"})
+            updateSections()
         }
     </script>
 </body>
