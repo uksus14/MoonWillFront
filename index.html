@@ -32,7 +32,7 @@
                     const button = document.createElement("button")
                     button.innerText = "Delete"
                     const id = section.pk;
-                    button.addEventListener("click", () => deleteSection(id))
+                    button.addEventListener("click", () => {console.log(id);deleteSection(id)})
                     const div = document.createElement("div")
                     div.classList.add("section")
                     div.style = `background-color: hsl(${section.color}, 100%, 50%)`;
