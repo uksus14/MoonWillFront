@@ -8,12 +8,8 @@
 </head>
 <body>
     <main id="main">
-        <!-- <div class="section" id="section-{{ section.id }}" style="background-color: hsl({{ section.color }}, 100%, 50%);">
-            <span>{{ section.title }}</span>
-            <button onclick="deleteSection({{ section.id }})">Delete</button>
-        </div> -->
     </main>
-
+    
     <input type="text" maxlength="50" name="title" id="title">
     <button onclick="addSection()">Add</button>
     <br>
@@ -21,15 +17,27 @@
     <script>
         const main = document.getElementById("main");
         const base = "https://moonwillsing.pythonanywhere.com/";
-        function addSection(){
+        async function addSection(){
             const title = document.getElementById("title")
-            fetch(base+`section/?title=${title}`)
+            await fetch(base+`section/?title=${title}`, {method: "PUT"})
             updateSections()
         }
-        function updateSections(){
-            fetch(base+`section/`).then(res => res.json()).then(data => {
-                console.log(data);
-            })
+        async function updateSections(){
+            await fetch(base+`section/`).then(res => res.json()).then(data => data.array.forEach(section => {
+                    const title = document.createElement("span")
+                    title.innerText = section.title
+                    const button = document.createElement("button")
+                    button.innerText = "Delete"
+                    button.onclick = () => deleteSection(section.id)
+                    const div = document.createElement("div")
+                    div.id = `section-${section.id}`
+                    div.classList.add("section")
+                    div.style = `background-color: hsl(${section.color}, 100%, 50%)`;
+                    div.appendChild(title);
+                    div.appendChild(button);
+                    main.appendChild(div);
+                })
+            )
         }
         function deleteSection(id){
             fetch(`https://moonwillsing.pythonanywhere.com/section/${id}`, {method: "DELETE"}).then(res => {
