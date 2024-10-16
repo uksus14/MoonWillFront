@@ -31,8 +31,8 @@
                     title.innerText = section.title
                     const button = document.createElement("button")
                     button.innerText = "Delete"
-                    console.log(section.pk);
-                    button.addEventListener("click", () => deleteSection(section.pk))
+                    const id = section.pk;
+                    button.addEventListener("click", () => deleteSection(id))
                     const div = document.createElement("div")
                     div.classList.add("section")
                     div.style = `background-color: hsl(${section.color}, 100%, 50%)`;
