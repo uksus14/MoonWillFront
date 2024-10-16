@@ -24,8 +24,8 @@
             updateSections()
         }
         async function updateSections(){
-            main.innerHTML = "";
             await fetch(base+`section/`).then(res => res.json()).then(data => {
+                main.innerHTML = "";
                 for (const section of data){
                     const title = document.createElement("span")
                     title.innerText = section.title
