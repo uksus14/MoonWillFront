@@ -13,17 +13,19 @@
     <input type="text" maxlength="50" name="title" id="title">
     <button onclick="addSection()">Add</button>
     <br>
+
     <button onclick="updateSections()">update</button>
     <script>
         const main = document.getElementById("main");
         const base = "https://moonwillsing.pythonanywhere.com/";
         async function addSection(){
-            const title = document.getElementById("title")
+            const title = document.getElementById("title").value
             await fetch(base+`section/?title=${title}`, {method: "PUT"})
             updateSections()
         }
         async function updateSections(){
-            await fetch(base+`section/`).then(res => res.json()).then(data => data.array.forEach(section => {
+            await fetch(base+`section/`).then(res => res.json()).then(data => {
+                for (const section of data){
                     const title = document.createElement("span")
                     title.innerText = section.title
                     const button = document.createElement("button")
@@ -36,8 +38,8 @@
                     div.appendChild(title);
                     div.appendChild(button);
                     main.appendChild(div);
-                })
-            )
+                }
+            })
         }
         function deleteSection(id){
             fetch(`https://moonwillsing.pythonanywhere.com/section/${id}`, {method: "DELETE"}).then(res => {
