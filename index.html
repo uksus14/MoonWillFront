@@ -15,13 +15,19 @@
     </main>
 
     <input type="text" maxlength="50" name="title" id="title">
-    <button>Add</button>
+    <button onclick="addSection()">Add</button>
     <br>
     <button onclick="updateSections()">update</button>
     <script>
         const main = document.getElementById("main");
+        const base = "https://moonwillsing.pythonanywhere.com/";
+        function addSection(){
+            const title = document.getElementById("title")
+            fetch(base+`section/?title=${title}`)
+            updateSections()
+        }
         function updateSections(){
-            fetch(`https://moonwillsing.pythonanywhere.com/section/`).then(res => res.json()).then(data => {
+            fetch(base+`section/`).then(res => res.json()).then(data => {
                 console.log(data);
             })
         }
